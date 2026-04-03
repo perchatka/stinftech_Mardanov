@@ -21,8 +21,8 @@ const float outlier = 1.0f;//выбросы (0.3f / 1.0f)
 const size_t outlier_step = 12;//шаг выбросов (0 / 24)
 
 size_t width = 3200, height = 3200;
-size_t step_x = 10;           
-size_t step_y = 10;         
+size_t step_x = 10;
+size_t step_y = 10;
 
 int main() {
     std::cout << "Start" << std::endl;
@@ -67,7 +67,7 @@ int main() {
     //assert(compare_data(filtered_data.data(), filtered_data_gpu.data(), data_size));
     //std::cout << "Filtered data is equal!" << std::endl;
 
-    auto float_data = generate_test_data_2d_grid(width, height, noise_level, outlier, step_x, step_y);
+    auto float_data = generate_test_data_2d(width, height, noise_level, outlier, step_x, step_y);
 
     std::vector<uint8_t> original_data_2d(width * height);
 
@@ -83,7 +83,7 @@ int main() {
     std::vector<uint8_t> filtered_data_simd_2d(height * width);
 
     auto start4 = std::chrono::high_resolution_clock::now();
-    MedianFilterSIMD::median_filter_3x3_simd(original_data_2d.data(), filtered_data_simd_2d.data(), width, height, width);
+    MedianFilterSIMD::median_filter_3x3(original_data_2d.data(), filtered_data_simd_2d.data(), width, height, width);
     auto end4 = std::chrono::high_resolution_clock::now();
     auto duration4 = std::chrono::duration_cast<std::chrono::milliseconds>(end4 - start4);
     std::cout << "SIMD version_2d: " << duration4.count() << " ms" << std::endl;
@@ -92,7 +92,7 @@ int main() {
     std::vector<uint8_t> filtered_data_gpu_2d(height * width);
 
     auto start5 = std::chrono::high_resolution_clock::now();
-    MedianFilterGPU::median_filter_3x3_gpu(original_data_2d.data(), filtered_data_gpu_2d.data(), width, height, width);
+    MedianFilterGPU::median_filter_3x3(original_data_2d.data(), filtered_data_gpu_2d.data(), width, height, width);
     auto end5 = std::chrono::high_resolution_clock::now();
     auto duration5 = std::chrono::duration_cast<std::chrono::milliseconds>(end5 - start5);
     std::cout << "GPU version_2d: " << duration5.count() << " ms" << std::endl;
