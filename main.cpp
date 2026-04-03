@@ -25,9 +25,7 @@ size_t step_x = 10;
 size_t step_y = 10;
 
 int main() {
-    std::cout << "Start" << std::endl;
     auto original_data = generate_test_data(data_size, noise_level, outlier, outlier_step);
-    std::cout << "Continue" << std::endl;
     //ОДНОПОТОЧНАЯ ВЕРСИЯ
     std::vector<float> filtered_data(data_size);
     auto start1 = std::chrono::high_resolution_clock::now();
@@ -67,7 +65,7 @@ int main() {
     //assert(compare_data(filtered_data.data(), filtered_data_gpu.data(), data_size));
     //std::cout << "Filtered data is equal!" << std::endl;
 
-    auto float_data = generate_test_data_2d(width, height, noise_level, outlier, step_x, step_y);
+    auto float_data = generate_test_data_2d(width, height, noise_level, outlier, step_x);
 
     std::vector<uint8_t> original_data_2d(width * height);
 
